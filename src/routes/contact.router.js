@@ -1,9 +1,9 @@
-const { emailSender } = require('../controllers/sendEmail.controller');
+const { contact } = require('../controllers/contact.controller');
 const express = require('express');
 
 const emailRouter = express.Router();
 
 emailRouter.route('/')
-    .post(emailSender);
+    .post(contact);
 
 module.exports = emailRouter;

@@ -19,12 +19,21 @@ const sendEmail = (options) => new Promise((resolve, reject) => {
         }
     })
     const mailOptions = {
+        ...options,
         from: process.env.EMAIL,
-        to: options.to,
-        subject: options.subject,
-        html: htmlContent,
-        ...options
+        // subject: options.subject,
+        // text: options.message,
+        // html: htmlContent,
     }
+
+    // Si el destinatario eres tú, añade el mensaje de texto.
+    if (options.to === process.env.EMAIL) {
+        mailOptions.text = options.message;
+    } else {
+    // De lo contrario, para el prospecto, envía el contenido HTML.
+        mailOptions.html = htmlContent;
+    }
+
     transporter.sendMail(mailOptions, (error, info) => {
         console.log(error, info)
         if (error) {
