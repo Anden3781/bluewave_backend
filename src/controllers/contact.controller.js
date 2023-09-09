@@ -6,22 +6,23 @@ const sendEmail = require('../utils/sendEmail');
 const contact = catchError(async(req, res) => {
     const path = require('path');
     const filePath = path.join(__dirname, '../index.html');
+    // interaction with html file using fs
     const htmlContent = fs.readFileSync(filePath, 'utf-8');
 
-    const {email, message, phoneNumber} = req.body;
+    const {email, message, subject, phoneNumber} = req.body;
     await Contact.create({
         email,
         message,
         phoneNumber
     });
-
+    // send email from the prospect to us
     await sendEmail({
         from: email,
         to: process.env.EMAIL,
-        subject: "Nuevo mensaje de contacto",
+        subject,
         message: `De: ${email}\n Mensaje: ${message}\n Número de contacto: ${phoneNumber || 'No proporcionado'}`
     })
-
+    // send email to the prospect
     await sendEmail({
         to: email,
         subject: 'Bienvenido!!',

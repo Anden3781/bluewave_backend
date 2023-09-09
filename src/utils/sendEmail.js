@@ -21,9 +21,8 @@ const sendEmail = (options) => new Promise((resolve, reject) => {
     const mailOptions = {
         ...options,
         from: process.env.EMAIL,
-        // subject: options.subject,
-        // text: options.message,
-        // html: htmlContent,
+        subject: options.subject,
+        phoneNumber: options.phoneNumber
     }
 
     // Si el destinatario eres tú, añade el mensaje de texto.
